@@ -6335,6 +6335,11 @@ ParserResult<FuncDecl> Parser::parseDeclFunc(SourceLoc StaticLoc,
     parseAbstractFunctionBody(FD);
   }
 
+  // Throw warning in case if the function has more than three arguments.
+  if (BodyParams->size() > 3) {
+    diagnose(NameLoc, diag::fn_more_than_three_args, FullName);
+  }
+  
   // Exit the scope introduced for the generic parameters.
   GenericsScope.reset();
 
